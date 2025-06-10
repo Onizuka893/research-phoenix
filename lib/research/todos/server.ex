@@ -48,16 +48,24 @@ defmodule Research.Todos.Server do
   end
 
   @impl true
-  def handle_call({:create_todo, attrs}, _from, state) do
+  def handle_call({:create_todo, attrs}, from, state) do
     Logger.info("hit create #{inspect(attrs)}")
-    task = Task.async(fn -> Context.create_todo(attrs) end)
-    response = Task.await(task)
 
-    with {:ok, _todo} <- response do
-      PubSub.broadcast(Research.PubSub, "todos", {:created, :todo})
-    end
+    # Spawn async task and don't block the GenServer
+    Task.start(fn ->
+      response = Context.create_todo(attrs)
 
-    {:reply, response, state}
+      # Broadcast on success
+      with {:ok, _todo} <- response do
+        PubSub.broadcast(Research.PubSub, "todos", {:created, :todo})
+      end
+
+      # Reply directly to the caller
+      GenServer.reply(from, response)
+    end)
+
+    # Don't reply immediately - Task will reply
+    {:noreply, state}
   end
 
   # Example for update_todo

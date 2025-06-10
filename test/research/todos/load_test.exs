@@ -11,7 +11,7 @@ defmodule Research.Todos.LoadTest do
     # Ensure a clean slate before the test runs
     Repo.delete_all(Todo)
 
-    num_users = 100
+    num_users = 200
     todos_per_user = 100
     total_todos = num_users * todos_per_user
 
@@ -49,7 +49,7 @@ defmodule Research.Todos.LoadTest do
           end)
 
         # Wait for all the tasks to complete. Timeout after 2 minutes.
-        Task.await_many(tasks, 10000)
+        Task.await_many(tasks)
       end)
 
     # --- 3. Verification and Reporting ---

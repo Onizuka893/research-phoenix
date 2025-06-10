@@ -11,9 +11,13 @@ defmodule Research.Todos.Context do
   end
 
   def create_todo(attrs) do
-    %Todo{}
-    |> Todo.changeset(attrs)
-    |> Repo.insert()
+    # %Todo{}
+    # |> Todo.changeset(attrs)
+    # |> Repo.insert()
+    Repo.checkout(fn ->
+      # Use prepared statements
+      Repo.insert(Todo.changeset(%Todo{}, attrs))
+    end)
   end
 
   def update_todo(%Todo{} = todo, attrs) do
