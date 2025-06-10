@@ -24,3 +24,4 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## Concurrency Test
 
 ![Concurrency Test](./assets/research-test.png "Test")
+![Chart](./assets/chart.png "Tabel")
