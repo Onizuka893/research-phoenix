@@ -19,5 +19,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Demo
 
-![Demo](./assets/research-demo.mov "Demo")
+![Demo](./assets/research-demo.gif "Demo")
+
+## Concurrency Test
+
 ![Concurrency Test](./assets/research-test.png "Test")
